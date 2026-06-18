@@ -7,6 +7,8 @@ const titulo = document.querySelector(".app__title");
 const botoes = document.querySelectorAll(".app__card-button");
 const musicaImput = document.querySelector("#alternar-musica");
 const startPauseBt = document.querySelector("#start-pause");
+const startPauseText = startPauseBt.querySelector("span");
+const startPauseIcon = startPauseBt.querySelector(".app__card-primary-butto-icon")
 
 const playAudio = new Audio("/sons/play.wav");
 const pauseAudio = new Audio("/sons/pause.mp3");
@@ -91,10 +93,14 @@ function iniciarOuPausar() {
     acabouAudio.pause();
     acabouAudio.currentTime = 0;
     playAudio.play();
-    intervaloId = setInterval(contagemRegressiva, 1000)
+    intervaloId = setInterval(contagemRegressiva, 1000);
+    startPauseText.textContent = "Pausar";
+    startPauseIcon.setAttribute("src", "/imagens/pause.png")
 }
 
 function zerar() {
     clearInterval(intervaloId);
+    startPauseText.textContent = "Começar";
+    startPauseIcon.setAttribute("src", "/imagens/play_arrow.png")
     intervaloId = null;
 }
