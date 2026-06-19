@@ -5,7 +5,7 @@ const longoBt = document.querySelector(".app__card-button--longo");
 const banner = document.querySelector(".app__image");
 const titulo = document.querySelector(".app__title");
 const botoes = document.querySelectorAll(".app__card-button");
-const musicaImput = document.querySelector("#alternar-musica");
+const musicaInput = document.querySelector("#alternar-musica");
 const startPauseBt = document.querySelector("#start-pause");
 const startPauseText = startPauseBt.querySelector("span");
 const startPauseIcon = startPauseBt.querySelector(".app__card-primary-butto-icon")
@@ -17,11 +17,12 @@ const pauseAudio = new Audio("/sons/pause.mp3");
 const acabouAudio = new Audio("/sons/beep.mp3");
 
 let temporizadorEmSegundos = 1500;
+let tempoPadraoDoContexto = 1500;
 let intervaloId = null;
 
 musica.loop = true;
 
-musicaImput.addEventListener("change", () => {
+musicaInput.addEventListener("change", () => {
     if(musica.paused) {
         musica.play();
     } else {
@@ -29,7 +30,9 @@ musicaImput.addEventListener("change", () => {
     }
 })
 
-function alteraContexto(contexto) {
+function alteraContexto(contexto, tempo) {
+    temporizadorEmSegundos = tempo;
+    tempoPadraoDoContexto = tempo;
     mostrarTempo()
     botoes.forEach(function(botao) {
         botao.classList.remove("active");
@@ -55,20 +58,17 @@ function alteraContexto(contexto) {
 }
 
 focoBt.addEventListener("click", () => {
-    temporizadorEmSegundos = 1500;
-    alteraContexto("foco");
+    alteraContexto("foco", 1500);
     focoBt.classList.add("active");
 })
 
 curtoBt.addEventListener("click", () => {
-    temporizadorEmSegundos = 300;
-    alteraContexto("descanso-curto");
+    alteraContexto("descanso-curto", 300);
     curtoBt.classList.add("active");
 })
 
 longoBt.addEventListener("click", () => {
-    temporizadorEmSegundos = 900;
-    alteraContexto("descanso-longo");
+    alteraContexto("descanso-longo", 900);
     longoBt.classList.add("active");
 })
 
@@ -78,7 +78,7 @@ const contagemRegressiva = () => {
     
     if (temporizadorEmSegundos <= 0) {
         acabouAudio.play();
-        temporizadorEmSegundos = 5;
+        temporizadorEmSegundos = tempoPadraoDoContexto;
         setTimeout(() => {
             alert("Tempo finalizado");
         }, 50);
