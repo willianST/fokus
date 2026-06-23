@@ -28,11 +28,17 @@ function criaElementoTarefa(tarefa) {
     const button = document.createElement("button");
     button.classList.add("app_button-edit");
     button.onclick = () => {
-        const novaDescricao = prompt("Qual o novo nome da tarefa?")
-        if(novaDescricao) {
-            p.textContent = novaDescricao
-            tarefa.descricao = novaDescricao
-            atualizarTarefas()
+        const editTarefa = prompt("Qual o novo nome da tarefa?", p.textContent);
+        if(editTarefa !== null) {
+            const novaDescricao = editTarefa.trim();
+            if(novaDescricao !== "") {
+                p.textContent = novaDescricao;
+                tarefa.descricao = novaDescricao;
+                atualizarTarefas();
+                alert("Tarefa atualizada com sucesso!");
+            } else {
+                alert("O nome da tarefa não pode ser vazio!");
+            }
         }
     };
 
@@ -57,10 +63,10 @@ formAdicionarTarefa.addEventListener("submit", (evento) => {
     const tarefa = {
         descricao: textArea.value
     };
-    tarefas.push(tarefa)
+    tarefas.push(tarefa);
     const elementoTarefa = criaElementoTarefa(tarefa);
     ulTarefas.append(elementoTarefa);
-    atualizarTarefas()
+    atualizarTarefas();
     textArea.value = "";
     formAdicionarTarefa.classList.add("hidden");
 });
